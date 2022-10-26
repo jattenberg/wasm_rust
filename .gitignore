@@ -1,0 +1,6 @@
+rusty-tags.vi
+.git-token
+target
+Cargo.lock
+src/includes/reco/Justfile
+*.rules
