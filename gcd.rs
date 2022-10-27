@@ -1,7 +1,3 @@
-
-
-
-
 use std::env;
 
 fn convert(x: String) -> i32 {
@@ -21,5 +17,5 @@ fn main() {
     let a = args[0];
     let b = args[1];
 
-    println!("{}", gcd(a, b))
+    println!("gcd of {} and {} is {}", a, b, gcd(a, b))
 }

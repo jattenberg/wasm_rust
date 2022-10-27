@@ -18,6 +18,5 @@ rustup target add wasm32-wasi
 rustc gcd.rs --target wasm32-wasi
 
 # execute the WASM code  you just compiled
-rustc gcd.rs --target wasm32-wasi
-
+wasmtime gcd.wasm 1288822 12472
 ```
