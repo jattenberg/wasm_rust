@@ -21,4 +21,5 @@ rustc gcd.rs --target wasm32-wasi
 wasmtime gcd.wasm 1288822 12472
 ```
 
-
+## With Github Actions
+[trying this](https://github.com/actions-rs/toolchain) to build rust in GA
