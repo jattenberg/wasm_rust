@@ -11,6 +11,10 @@ jobs:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v3
+      - uses: rickstaa/action-create-tag@v1
+        with:
+          tag: "latest"
+          message: ${{ github.event.head_commit.message }}
       - name: setup the rust toolchain
         uses: actions-rs/toolchain@v1
         with:
