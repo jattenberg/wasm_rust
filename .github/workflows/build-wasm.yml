@@ -41,8 +41,11 @@ jobs:
           artifacts: gcd.wasm
           tag: ${{ steps.tag_version.outputs.new_tag }}
           name: Release ${{ steps.tag_version.outputs.new_tag }}
-          body: ${{ steps.tag_version.outputs.changelog }}    
-
+          body: ${{ steps.tag_version.outputs.changelog }}
+      - uses: actions/upload-artifact@v3
+        with:
+          name: gcd.wasm
+          path: gcd.wasm
       - name: Check Output Parameters
         run: |
           echo "Got tag name ${{ steps.release.outputs.tag_name }}"
