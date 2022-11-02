@@ -17,4 +17,7 @@ jobs:
       - run: npm install -g bats
       - run: rustup target add wasm32-wasi
       - run: rustc gcd.rs --target wasm32-wasi
-      - run: ls -lths 
+      - run: ls -lths gcd.wasm
+      - uses: actions/upload-artifact@v3
+        with:
+          path: gcd.wasm
