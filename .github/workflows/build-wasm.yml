@@ -11,10 +11,6 @@ jobs:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v3
-      - uses: rickstaa/action-create-tag@v1
-        with:
-          tag: "latest"
-          message: ${{ github.event.head_commit.message }}
       - name: setup the rust toolchain
         uses: actions-rs/toolchain@v1
         with:
@@ -27,19 +23,26 @@ jobs:
         run: rustc gcd.rs --target wasm32-wasi
       - name: ensure the wasm is there and compiled
         run: ls -lths gcd.wasm
-
       - name: Get Changelog Entry
         id: changelog_reader
         uses: mindsers/changelog-reader-action@v1.1.0
         with:
           version: ${{ github.ref }}
           path: ./CHANGELOG.md
-          
-      - uses: ncipollo/release-action@v1
+      - name: Bump version and push tag
+        id: tag_version
+        uses: mathieudutour/github-tag-action@v6.1
         with:
-          artifacts: "gcd.wasm"
-          body: ${{ steps.changelog_reader.outputs.log_entry }}
-          token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create a GitHub release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: gcd.wasm
+          tag: ${{ steps.tag_version.outputs.new_tag }}
+          name: Release ${{ steps.tag_version.outputs.new_tag }}
+          body: ${{ steps.tag_version.outputs.changelog }}    
+
       - name: Check Output Parameters
         run: |
           echo "Got tag name ${{ steps.release.outputs.tag_name }}"
